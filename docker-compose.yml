@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  mult1:
+    build: ./mult
+    container_name: mult1
+    ports:
+      - "3001:3000"
+
+  mult2:
+    build: ./mult
+    container_name: mult2
+    ports:
+      - "3002:3000"
+
+  mult3:
+    build: ./mult
+    container_name: mult3
+    ports:
+      - "3003:3000"
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "8080:80"
+    depends_on:
+      - mult1
+      - mult2
+      - mult3
